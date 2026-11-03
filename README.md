@@ -228,3 +228,34 @@ sudo efibootmgr -o 0003,0001,0002,0000
 | `secrets/mmx64.efi` | MokManager 管理界面 |
 ```
 
+
+## openssl 加密归档（简单备份）
+
+只想把整个 `secrets/` 加密成一个文件丢进 git，每次需要解密后手动放回。
+
+### 加密
+
+```bash
+cd /etc/nixos
+tar czf - secrets/ | openssl aes-256-cbc -pbkdf2 -iter 100000 -salt \
+  -out secrets.tar.gz.enc
+```
+
+输入一个强密码。将 `secrets.tar.gz.enc` 提交 git，原 `secrets/` 留在本机或从 git 删除。
+
+### 解密
+
+```bash
+cd /etc/nixos
+openssl aes-256-cbc -d -pbkdf2 -iter 100000 \
+  -in secrets.tar.gz.enc | tar xz
+```
+
+### 缺点
+
+- 每次修改 MOK 密钥都要重新打包提交
+- 使用系统前需手动解密，与 NixOS 声明式理念相悖
+- 密码靠脑记或密码管理器，没有 sops 灵活
+
+适合纯备份场景；日常多机同步还是 sops-nix 省心。
+
