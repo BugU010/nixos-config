@@ -1,0 +1,61 @@
+{
+  "nodes": {
+    "grub-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789502186,
+        "narHash": "sha256-Zy6nsO1mt8l1N68zHmSiUtwhOGccSX0JDCkyng807JY=",
+        "owner": "13atm01",
+        "repo": "GRUB-Theme",
+        "rev": "9b5460b01ef043fb120b2f57dd41a78328a0b7d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "13atm01",
+        "repo": "GRUB-Theme",
+        "type": "github"
+      }
+    },
+    "nixos-shim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708345645,
+        "narHash": "sha256-MZ47XpRzgQKcdbobKLc8DcRLqLP1UhFwn59bq8UszoQ=",
+        "owner": "RaitoBezarius",
+        "repo": "nixos-shim",
+        "rev": "36de989246c79ce9793127ae9e55f052daa8f57b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RaitoBezarius",
+        "repo": "nixos-shim",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1793540411,
+        "narHash": "sha256-fiPJ88izTVucjeo2EQ3jk4aWmLg03I1D4vxnX2QjEgE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0bb2eedc20e4739f29e8045034f2828ad7054f8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "grub-theme": "grub-theme",
+        "nixos-shim": "nixos-shim",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

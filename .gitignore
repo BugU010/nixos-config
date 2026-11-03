@@ -1,0 +1,9 @@
+# 忽略所有明文密钥
+secrets/MOK.priv
+secrets/MOK.pem
+secrets/MOK.der
+!secrets/shimx64.efi
+!secrets/mmx64.efi
+
+# 但保留加密文件
+!secrets/secrets.enc.yaml
