@@ -38,7 +38,7 @@ in
     efi.canTouchEfiVariables = true;
 
     # -1 = 菜单常驻
-    timeout = -1;
+    timeout = 60;
 
     grub = {
       enable = true;

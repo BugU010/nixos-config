@@ -12,6 +12,7 @@
     ./modules/secureboot.nix
     ./modules/ssh.nix
     ./modules/packages.nix
+    ./modules/driver.nix
   ];
 
   system.stateVersion = "26.11";
