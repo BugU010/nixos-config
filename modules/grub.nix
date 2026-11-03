@@ -1,4 +1,10 @@
-{ config, pkgs, lib, grub-theme, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  grub-theme,
+  ...
+}:
 
 let
   # ↓↓↓ 改成你想用的主题目录（相对仓库根目录） ↓↓↓
@@ -36,9 +42,9 @@ in
 
     grub = {
       enable = true;
-      device = "nodev";              # UEFI 专用
+      device = "nodev"; # UEFI 专用
       efiSupport = true;
-      useOSProber = true;            # 自动扫描 Windows
+      useOSProber = true; # 自动扫描 Windows
 
       # 直接把主题目录传给 GRUB，不要再手动 set theme
       theme = grubTheme;

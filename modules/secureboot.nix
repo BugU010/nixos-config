@@ -2,7 +2,8 @@
 
 let
   esp = "/boot";
-in {
+in
+{
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -46,6 +47,9 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    sbsigntool mokutil openssl efibootmgr
+    sbsigntool
+    mokutil
+    openssl
+    efibootmgr
   ];
 }
