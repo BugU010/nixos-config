@@ -160,8 +160,7 @@ let
     set -euo pipefail
 
     cd /etc/nixos
-    echo "输入解密密码:"
-    read -s PASS
+    PASS=$(systemd-ask-password "输入解密密码:")
 
     openssl aes-256-cbc -d -pbkdf2 -iter 100000 \
       -pass env:PASS -in secrets.tar.gz.enc | tar xz
