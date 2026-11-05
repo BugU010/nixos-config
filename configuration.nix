@@ -16,6 +16,7 @@
     ./modules/snapper-btrfs.nix
   ];
 
+  time.timeZone = "Asia/Shanghai";
   system.stateVersion = "26.11";
   nix.settings = {
     substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];

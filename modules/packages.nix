@@ -153,6 +153,10 @@ let
 
     echo "✅ secrets/ 已还原"
   '';
+  nv = ps.writeScriptBin "nv" ''
+    #!/usr/bin/env bash
+    exec nvim "$@"
+  '';
 in
 {
   environment.systemPackages =
@@ -169,6 +173,7 @@ in
       nixfmt-all
       secrets-enc
       secrets-dec
+      nv
     ];
   # ++ virt;   # 需要容器/虚拟化时取消注释
 }
