@@ -138,19 +138,8 @@ let
     #!/usr/bin/env bash
     set -euo pipefail
 
-    cd /etc/nixos
-    echo "输入加密密码:"
-    read -s PASS
-    echo "确认密码:"
-    read -s PASS2
-
-    if [[ "$PASS" != "$PASS2" ]]; then
-      echo "两次输入不一致，退出"
-      exit 1
-    fi
-
-    tar czf - secrets/ | openssl aes-256-cbc -pbkdf2 -iter 100000 -salt \
-      -pass env:PASS -out secrets.tar.gz.enc
+    tar czf - -C /etc/nixos secrets/ | openssl aes-256-cbc -pbkdf2 -iter 100000 -salt \
+      -out /etc/nixos/secrets.tar.gz.enc
 
     echo "✅ secrets.tar.gz.enc 已生成"
   '';
@@ -159,11 +148,8 @@ let
     #!/usr/bin/env bash
     set -euo pipefail
 
-    cd /etc/nixos
-    PASS=$(systemd-ask-password "输入解密密码:")
-
     openssl aes-256-cbc -d -pbkdf2 -iter 100000 \
-      -pass env:PASS -in secrets.tar.gz.enc | tar xz
+      -in /etc/nixos/secrets.tar.gz.enc | tar xz -C /etc/nixos
 
     echo "✅ secrets/ 已还原"
   '';
