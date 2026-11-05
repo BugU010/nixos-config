@@ -13,6 +13,7 @@
     ./modules/ssh.nix
     ./modules/packages.nix
     ./modules/driver.nix
+    ./modules/snapper-btrfs.nix
   ];
 
   system.stateVersion = "26.11";
