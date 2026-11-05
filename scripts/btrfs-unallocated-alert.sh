@@ -2,7 +2,7 @@
 set -u
 
 MOUNT="/"
-THRESHOLD_GIB=1000
+THRESHOLD_GIB=90
 
 NTFY_URL="https://ntfy.yexi.space:8443/alert"
 NTFY_USER="automation"
