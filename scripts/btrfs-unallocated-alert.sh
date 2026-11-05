@@ -2,7 +2,7 @@
 set -u
 
 MOUNT="/"
-THRESHOLD_GIB=10
+THRESHOLD_GIB=1000
 
 NTFY_URL="https://ntfy.yexi.space:8443/alert"
 NTFY_USER="automation"
@@ -48,10 +48,9 @@ retry-delay = 5
 header = "Title: Btrfs Unallocated Alert"
 header = "Priority: high"
 header = "Tags: warning,floppy_disk"
-data-binary = "$MSG"
 EOF
 
-if curl -K "$CURL_CFG"; then
+if curl -K "$CURL_CFG" --data-binary "$MSG"; then
   logger -t btrfs-alert "ntfy 推送成功"
 else
   rc=$?

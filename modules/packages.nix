@@ -101,9 +101,52 @@ let
   #   qemu                  # QEMU 虚拟机
   #   virt-manager          # 虚拟化管理界面
   # ];
+  # ===== 自定义脚本 =====
+  nixreload = ps.writeScriptBin "nixreload" ''
+    #!/usr/bin/env bash
+    set -e
+    sudo nixos-rebuild switch --flake /etc/nixos#default
+    cd /etc/nixos
+    git add -A
+    git commit -m "chore: NixOS rebuild $(date '+%Y-%m-%d %H:%M:%S')" || true
+    git push
+    echo "✅ rebuild + 提交推送完成"
+  '';
 
+  nixfmt-all = ps.writeScriptBin "nixfmt-all" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    cd /etc/nixos
+    FILES=$(find . -name "*.nix" -not -path "./.git/*" | sort)
+
+    if [[ -z "$FILES" ]]; then
+      echo "没有找到 .nix 文件"
+      exit 0
+    fi
+
+    if [[ "$*" == *"--check"* ]]; then
+      nixfmt --check $FILES
+    else
+      nixfmt $FILES
+      COUNT=$(echo "$FILES" | wc -l)
+      echo "✅ 已格式化 $COUNT 个 .nix 文件"
+    fi
+  '';
 in
 {
-  environment.systemPackages = core ++ cli ++ sys ++ net ++ monitor ++ dev ++ nixTools ++ sec;
+  environment.systemPackages =
+    core
+    ++ cli
+    ++ sys
+    ++ net
+    ++ monitor
+    ++ dev
+    ++ nixTools
+    ++ sec
+    ++ [
+      nixreload
+      nixfmt-all
+    ];
   # ++ virt;   # 需要容器/虚拟化时取消注释
 }
