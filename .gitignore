@@ -7,3 +7,4 @@ secrets/MOK.der
 
 # 但保留加密文件
 !secrets/secrets.enc.yaml
+secrets/ntfy-password.txt
