@@ -109,8 +109,7 @@ let
     cd /etc/nixos
     git add -A
     git commit -m "chore: NixOS rebuild $(date '+%Y-%m-%d %H:%M:%S')" || true
-    git push
-    echo "✅ rebuild + 提交推送完成"
+    echo "✅ rebuild + 提交完成"
   '';
 
   nixfmt-all = ps.writeScriptBin "nixfmt-all" ''
