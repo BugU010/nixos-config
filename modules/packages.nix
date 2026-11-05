@@ -132,6 +132,42 @@ let
       echo "✅ 已格式化 $COUNT 个 .nix 文件"
     fi
   '';
+
+  # ===== secrets 加密/解密 =====
+  secrets-enc = ps.writeScriptBin "secrets-enc" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    cd /etc/nixos
+    echo "输入加密密码:"
+    read -s PASS
+    echo "确认密码:"
+    read -s PASS2
+
+    if [[ "$PASS" != "$PASS2" ]]; then
+      echo "两次输入不一致，退出"
+      exit 1
+    fi
+
+    tar czf - secrets/ | openssl aes-256-cbc -pbkdf2 -iter 100000 -salt \
+      -pass env:PASS -out secrets.tar.gz.enc
+
+    echo "✅ secrets.tar.gz.enc 已生成"
+  '';
+
+  secrets-dec = ps.writeScriptBin "secrets-dec" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    cd /etc/nixos
+    echo "输入解密密码:"
+    read -s PASS
+
+    openssl aes-256-cbc -d -pbkdf2 -iter 100000 \
+      -pass env:PASS -in secrets.tar.gz.enc | tar xz
+
+    echo "✅ secrets/ 已还原"
+  '';
 in
 {
   environment.systemPackages =
@@ -146,6 +182,8 @@ in
     ++ [
       nixreload
       nixfmt-all
+      secrets-enc
+      secrets-dec
     ];
   # ++ virt;   # 需要容器/虚拟化时取消注释
 }
