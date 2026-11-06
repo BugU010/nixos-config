@@ -1,8 +1,10 @@
 {
-  description = "NixOS configuration";
+  description = "My NixOS Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    
     grub-theme = {
       url = "github:13atm01/GRUB-Theme";
       flake = false;
@@ -11,26 +13,14 @@
       url = "github:RaitoBezarius/nixos-shim";
       flake = false;
     };
+    # 如果你还有 disko 等其他 input，保留在这里
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      grub-theme,
-      ...
-    }@inputs:
-    {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-          grub-theme = inputs.grub-theme;
-          nixos-shim = inputs.nixos-shim;
-        };
-        modules = [
-          ./configuration.nix
-        ];
-      };
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+      imports = [
+        ./flake/nixos.nix
+      ];
     };
 }
