@@ -26,7 +26,7 @@ in
       efiInstallAsRemovable = false; # 必须为 false 才能与 canTouchEfiVariables 配合
       configurationLimit = 10;
       useOSProber = true; # 自动扫描 Windows
-      gfxmodeEfi = "1920x1080,auto";
+      gfxmodeEfi = "3840x2160,1920x1080,auto";
       extraGrubInstallArgs = [
         "--modules=part_gpt part_msdos fat normal search search_fs_uuid \
          configfile gzio efi_gop efi_uga all_video gfxterm \
