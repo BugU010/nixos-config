@@ -11,10 +11,6 @@
       url = "github:RaitoBezarius/nixos-shim";
       flake = false;
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -34,8 +30,6 @@
         };
         modules = [
           ./configuration.nix
-          ./modules/disko.nix
-          inputs.disko.nixosModules.disko
         ];
       };
     };
