@@ -47,6 +47,7 @@ terminal-font: "assets/menu-font.pf2"
   item_font = "assets/menu-font.pf2"
   item_color = "#bbbbbb"
   selected_item_color = "#ffffff"
+  selected_item_pixmap_style = "assets/select_*.png"
 
   # 32px 字体，item_height 需 >= 字体高度，留上下留白
   item_height = 52
