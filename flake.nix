@@ -9,7 +9,11 @@
     };
     nixos-shim = {
       url = "github:RaitoBezarius/nixos-shim";
-      flake = false; # 关键：当源码树用，不当中不是常规 flake
+      flake = false;
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -25,10 +29,14 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          grub-theme = inputs.grub-theme; # 裸参数，模块里直接接
-          nixos-shim = inputs.nixos-shim; # 提前备好，后面用得到
+          grub-theme = inputs.grub-theme;
+          nixos-shim = inputs.nixos-shim;
         };
-        modules = [ ./configuration.nix ];
+        modules = [
+          ./configuration.nix
+          ./modules/disko.nix
+          inputs.disko.nixosModules.disko
+        ];
       };
     };
 }
