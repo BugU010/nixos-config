@@ -12,6 +12,7 @@
       init.defaultBranch = "main";
       pull.rebase = true;
       core.editor = "nvim";
+      credential.helper = "store";
     };
   };
 }
