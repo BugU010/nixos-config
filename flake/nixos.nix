@@ -1,25 +1,26 @@
 { inputs, ... }:
 
 let
-  # 扫描 hosts 目录下的所有文件夹
-  hostEntries = builtins.readDir ../hosts;
-  
-  # 使用 inputs.nixpkgs.lib.filterAttrs
+  lib = inputs.nixpkgs.lib;
+  hostsDir = ../hosts;
+
+  isHost = name: type:
+    type == "directory"
+    && !(lib.hasPrefix "." name)
+    && builtins.pathExists (hostsDir + "/${name}/default.nix");
+
   hosts = builtins.attrNames (
-    inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") hostEntries
+    lib.filterAttrs isHost (builtins.readDir hostsDir)
   );
 in
 {
-  flake.nixosConfigurations = inputs.nixpkgs.lib.genAttrs hosts (hostName:
-    inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      
+  flake.nixosConfigurations = lib.genAttrs hosts (hostName:
+    lib.nixosSystem {
       specialArgs = {
         inherit inputs hostName;
         grub-theme = inputs.grub-theme;
         nixos-shim = inputs.nixos-shim;
       };
-
       modules = [
         ../hosts/${hostName}/default.nix
       ];
