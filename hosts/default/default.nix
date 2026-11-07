@@ -27,6 +27,14 @@
 
   time.timeZone = "Asia/Shanghai";
   system.stateVersion = "26.05";
+  users.users.bugu = {
+    isNormalUser = true;
+    useDefaultShell = true;
+    # extraGroups = [ "wheel" ];  # 如果有，保留原有配置
+  };
+
+  # 同时确保全局默认 Shell 已设置（如果 zsh.nix 里已有，可跳过）
+  users.defaultUserShell = pkgs.zsh;
 
   nix.settings = {
     substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
