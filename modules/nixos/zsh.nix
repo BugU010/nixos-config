@@ -22,10 +22,10 @@
           "docker-compose"
         ];
       };
-      # interactiveShellInit = lib.mkAfter ''
-      # zoxide 初始化（手动后置，确保二进制已在 PATH 中）
-      #  eval "$(zoxide init zsh)"
-      # '';
+      interactiveShellInit = lib.mkAfter ''
+        # zoxide 初始化（手动后置，确保二进制已在 PATH 中）
+          eval "$(zoxide init zsh)"
+      '';
     };
 
     zoxide = {
