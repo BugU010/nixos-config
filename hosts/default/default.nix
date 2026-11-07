@@ -30,7 +30,7 @@
   users.users.bugu = {
     isNormalUser = true;
     useDefaultShell = true;
-    # extraGroups = [ "wheel" ];  # 如果有，保留原有配置
+    extraGroups = [ "wheel" ]; # 如果有，保留原有配置
   };
 
   # 同时确保全局默认 Shell 已设置（如果 zsh.nix 里已有，可跳过）
