@@ -4,7 +4,7 @@
 #   ./proxy.sh off               # 关闭代理
 #   ./proxy.sh status            # 查看当前代理
 
-DEFAULT_IP="192.168.5.6"
+DEFAULT_IP="192.168.5.7"
 PORT="10808"
 
 PROXY_VARS=(http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY)
