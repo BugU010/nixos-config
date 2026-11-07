@@ -1,6 +1,9 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
+  # ===== 全局默认 Shell =====
+  users.defaultUserShell = pkgs.zsh;
+  environment.shells = with pkgs; [ zsh ];
   programs = {
     zsh = {
       enable = true;
