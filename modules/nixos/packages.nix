@@ -5,33 +5,23 @@ let
 
   # ===== 基础必备 =====
   core = with ps; [
-    git # 版本控制
-    git-lfs # Git 大文件扩展
     neovim # 主力编辑器
     curl # 网络请求/下载
     wget # 下载工具
     openssl # 证书/密钥/加密
-    gnupg # GPG 签名/加密
     unzip # 解压 zip
     zip # 压缩 zip
-    tree # 目录树
     file # 查看文件类型
   ];
-
-  # ===== 终端增强 =====
+    # ===== 终端增强（NixOS 系统级无 programs.* 模块，统一装包）=====
   cli = with ps; [
-    bat # 带语法高亮的 cat
-    eza # 现代 ls（替代 ls）
-    fd # 更快的 find
-    ripgrep # 更快更强大的 grep
-    fzf # 模糊查找
-    zoxide # 智能 cd（z 命令）
-    jq # JSON 处理
-    yq # YAML 处理
-    tldr # 简化的 man 手册
-    tmux # 终端复用
-    zellij # 现代终端复用
-    starship # 跨 shell 提示符
+    eza          # 现代 ls
+    bat          # 带语法高亮的 cat
+    fd           # 更快的 find
+    ripgrep      # 更快的 grep
+    jq           # JSON 处理
+    yq           # YAML 处理
+    tealdeer     # 提供 tldr 命令
   ];
 
   # ===== 系统 / 磁盘 / 引导（Secure Boot 相关）=====
@@ -60,7 +50,6 @@ let
 
   # ===== 监控与诊断 =====
   monitor = with ps; [
-    htop # 进程监控
     btop # 更漂亮的资源监控
     ncdu # 磁盘占用分析
     dust # 现代版 du
@@ -69,10 +58,6 @@ let
     bmon # 实时网速监控
     fastfetch # 系统信息展示
     inxi # 硬件信息查询
-  ];
-
-  # ===== 开发工具链 =====
-  dev = with ps; [
   ];
 
   # ===== Nix 效率工具 =====
@@ -89,7 +74,6 @@ let
   sec = with ps; [
     age # 简单加密工具
     sops # secrets 加密管理
-    pass # 密码管理
     gh # GitHub 命令行
   ];
 
@@ -115,22 +99,7 @@ let
   nixfmt-all = ps.writeScriptBin "nixfmt-all" ''
     #!/usr/bin/env bash
     set -euo pipefail
-
-    cd /etc/nixos
-    FILES=$(find . -name "*.nix" -not -path "./.git/*" | sort)
-
-    if [[ -z "$FILES" ]]; then
-      echo "没有找到 .nix 文件"
-      exit 0
-    fi
-
-    if [[ "$*" == *"--check"* ]]; then
-      nixfmt --check $FILES
-    else
-      nixfmt $FILES
-      COUNT=$(echo "$FILES" | wc -l)
-      echo "✅ 已格式化 $COUNT 个 .nix 文件"
-    fi
+    fd -e nix -x nixfmt
   '';
 
   # ===== secrets 加密/解密 =====
@@ -153,19 +122,14 @@ let
 
     echo "✅ secrets/ 已还原"
   '';
-  nv = ps.writeScriptBin "nv" ''
-    #!/usr/bin/env bash
-    exec nvim "$@"
-  '';
 in
 {
   environment.systemPackages =
     core
-    ++ cli
     ++ sys
+    ++ cli
     ++ net
     ++ monitor
-    ++ dev
     ++ nixTools
     ++ sec
     ++ [
@@ -173,7 +137,6 @@ in
       nixfmt-all
       secrets-enc
       secrets-dec
-      nv
     ];
   # ++ virt;   # 需要容器/虚拟化时取消注释
 }

@@ -18,6 +18,8 @@
     ../../modules/nixos/git.nix
     ../../modules/nixos/packages.nix
     ../../modules/nixos/ssh.nix
+    ../../modules/nixos/zsh.nix
+    ../../modules/nixos/gnupg.nix
   ];
 
   # 3. 设置主机名（由 flake/nixos.nix 自动传入）
@@ -29,7 +31,10 @@
   nix.settings = {
     substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
     trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
 
