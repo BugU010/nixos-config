@@ -13,15 +13,15 @@ let
     zip # 压缩 zip
     file # 查看文件类型
   ];
-    # ===== 终端增强（NixOS 系统级无 programs.* 模块，统一装包）=====
+  # ===== 终端增强（NixOS 系统级无 programs.* 模块，统一装包）=====
   cli = with ps; [
-    eza          # 现代 ls
-    bat          # 带语法高亮的 cat
-    fd           # 更快的 find
-    ripgrep      # 更快的 grep
-    jq           # JSON 处理
-    yq           # YAML 处理
-    tealdeer     # 提供 tldr 命令
+    eza # 现代 ls
+    bat # 带语法高亮的 cat
+    fd # 更快的 find
+    ripgrep # 更快的 grep
+    jq # JSON 处理
+    yq # YAML 处理
+    tealdeer # 提供 tldr 命令
   ];
 
   # ===== 系统 / 磁盘 / 引导（Secure Boot 相关）=====

@@ -17,14 +17,14 @@
           "sudo"
           "docker"
           "docker-compose"
-          "zoxide"
         ];
       };
     };
 
-        zoxide = {
+    zoxide = {
       enable = true;
       flags = [ "--cmd cd" ];
+      enableZshIntegration = true;
     };
 
     starship = {
@@ -33,12 +33,11 @@
     };
 
     fzf = {
-      fuzzyCompletion = true;   # 启用模糊补全
-      keybindings = false;       # 启用 Ctrl+R / Ctrl+T 等快捷键
+      fuzzyCompletion = true; # 启用模糊补全
+      keybindings = false; # 启用 Ctrl+R / Ctrl+T 等快捷键
     };
 
-
-  }; 
+  };
   environment.shellAliases = {
     ls = "eza";
     ll = "eza -l";
