@@ -1,27 +1,36 @@
 {
-  description = "My NixOS Configuration";
+  description = "My NixOS & nix-darwin Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    grub-theme = {
-      url = "github:13atm01/GRUB-Theme";
-      flake = false;
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-shim = {
       url = "github:RaitoBezarius/nixos-shim";
       flake = false;
     };
-    # 如果你还有 disko 等其他 input，保留在这里
   };
 
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+      ]; # 新增 aarch64-darwin
       imports = [
         ./flake/nixos.nix
+        ./flake/darwin.nix # 新增
       ];
     };
 }

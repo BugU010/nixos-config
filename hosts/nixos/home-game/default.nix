@@ -10,10 +10,10 @@
   imports = [
     # 1. 导入本机专属的硬件配置
     ./hardware-configuration.nix
-    ./modules/driver.nix
-    ./modules/grub.nix
-
+    ./driver.nix
     # 2. 显式导入你需要的通用模块（注意这里是 ../../ 退回到根目录）
+
+    ../../modules/nixos/grub.nix
     ../../modules/nixos/grub-theme/mod.nix
     ../../modules/nixos/git.nix
     ../../modules/nixos/packages.nix

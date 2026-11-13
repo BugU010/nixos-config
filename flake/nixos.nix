@@ -1,8 +1,9 @@
+# flake/nixos.nix
 { inputs, ... }:
 
 let
   lib = inputs.nixpkgs.lib;
-  hostsDir = ../hosts;
+  hostsDir = ../hosts/nixos; # 改为 nixos 子目录
 
   isHost =
     name: type:
@@ -18,12 +19,9 @@ in
     lib.nixosSystem {
       specialArgs = {
         inherit inputs hostName;
-        grub-theme = inputs.grub-theme;
         nixos-shim = inputs.nixos-shim;
       };
-      modules = [
-        ../hosts/${hostName}/default.nix
-      ];
+      modules = [ ../hosts/nixos/${hostName}/default.nix ]; # 同步修改
     }
   );
 }
