@@ -1,10 +1,12 @@
-# 忽略所有明文密钥
+# 明文 MOK 密钥绝不入库
 secrets/MOK.priv
 secrets/MOK.pem
 secrets/MOK.der
-!secrets/shimx64.efi
-!secrets/mmx64.efi
 
-# 但保留加密文件
-!secrets/secrets.enc.yaml
+# 明文 secrets（sops 明文、令牌等）
+secrets/secrets.yaml
 secrets/ntfy-password.txt
+
+# 说明：
+#   secrets/shimx64.efi 与 secrets/mmx64.efi 为微软签名引导文件，可公开，保持跟踪；
+#   secrets.tar.gz.enc 为 openssl 加密备份，同样入库。

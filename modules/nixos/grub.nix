@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  grub-theme,
-  ...
-}:
+{ pkgs, ... }:
 
 let
   esp = "/boot";

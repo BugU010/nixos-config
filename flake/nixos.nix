@@ -3,7 +3,7 @@
 
 let
   lib = inputs.nixpkgs.lib;
-  hostsDir = ../hosts/nixos; # 改为 nixos 子目录
+  hostsDir = ../hosts/nixos;
 
   isHost =
     name: type:
@@ -19,9 +19,11 @@ in
     lib.nixosSystem {
       specialArgs = {
         inherit inputs hostName;
-        nixos-shim = inputs.nixos-shim;
       };
-      modules = [ ../hosts/nixos/${hostName}/default.nix ]; # 同步修改
+      modules = [
+        ../hosts/nixos/${hostName}/default.nix
+        inputs.home-manager.nixosModules.home-manager # ← 新增：接 home-manager
+      ];
     }
   );
 }

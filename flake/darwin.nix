@@ -17,9 +17,13 @@ in
   flake.darwinConfigurations = lib.genAttrs hosts (
     hostName:
     inputs.nix-darwin.lib.darwinSystem {
-      system = "x86_64-darwin"; # Intel Mac 改为 "x86_64-darwin"
+      system = "x86_64-darwin";
       specialArgs = { inherit inputs hostName; };
-      modules = [ ../hosts/darwin/${hostName}/default.nix ];
+      modules = [
+        ../hosts/darwin/${hostName}/default.nix
+        inputs.home-manager.darwinModules.home-manager # ← 新增：home-manager（darwin 用 darwinModules）
+        inputs.sops-nix.darwinModules.sops # ← 新增：sops-nix（darwin 用 darwinModules）
+      ];
     }
   );
 }

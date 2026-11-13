@@ -75,7 +75,7 @@ sudo chmod 600 MOK.priv
 ### 3. 构建系统（生成 GRUB 与内核）
 
 ```bash
-sudo nixos-rebuild switch --flake /etc/nixos#default
+sudo nixos-rebuild switch --flake /etc/nixos#home-game
 ```
 
 ### 4. 运行首次初始化脚本
@@ -128,7 +128,7 @@ sbverify --cert /etc/nixos/secrets/MOK.pem /boot/EFI/nixos/kernel-*.efi
 ### 普通更新
 
 ```bash
-sudo nixos-rebuild switch --flake /etc/nixos#default
+sudo nixos-rebuild switch --flake /etc/nixos#home-game
 ```
 
 `secureboot.nix` 中的 `extraInstallCommands` 会自动完成：
@@ -258,4 +258,3 @@ openssl aes-256-cbc -d -pbkdf2 -iter 100000 \
 - 密码靠脑记或密码管理器，没有 sops 灵活
 
 适合纯备份场景；日常多机同步还是 sops-nix 省心。
-

@@ -15,9 +15,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-shim = {
-      url = "github:RaitoBezarius/nixos-shim";
-      flake = false;
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

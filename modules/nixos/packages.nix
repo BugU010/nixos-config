@@ -88,8 +88,8 @@ let
   # ===== 自定义脚本 =====
   nixreload = ps.writeScriptBin "nixreload" ''
     #!/usr/bin/env bash
-    set -e
-    sudo nixos-rebuild switch --flake /etc/nixos#default
+    set -euo pipefail
+    sudo nixos-rebuild switch --flake "/etc/nixos#home-game"
     cd /etc/nixos
     git add -A
     git commit -m "chore: NixOS rebuild $(date '+%Y-%m-%d %H:%M:%S')" || true

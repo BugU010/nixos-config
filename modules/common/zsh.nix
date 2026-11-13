@@ -1,51 +1,7 @@
-{ lib, pkgs, ... }:
-
+{ ... }:
 {
-  # ===== 全局默认 Shell =====
-  users.defaultUserShell = pkgs.zsh;
-  environment.shells = with pkgs; [ zsh ];
-  programs = {
-    zsh = {
-      enable = true;
-      ohMyZsh = {
-        enable = true;
-        theme = "robbyrussell";
-        plugins = [
-          "git"
-          "aliases"
-          "alias-finder"
-          "cp"
-          "copypath"
-          "copyfile"
-          "sudo"
-          "docker"
-          "docker-compose"
-        ];
-      };
-      interactiveShellInit = lib.mkAfter ''
-        # zoxide 初始化（手动后置，确保二进制已在 PATH 中）
-          eval "$(zoxide init zsh)"
-      '';
-    };
-
-    zoxide = {
-      enable = true;
-      flags = [ "--cmd cd" ];
-      enableZshIntegration = true;
-    };
-
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    fzf = {
-      fuzzyCompletion = true; # 启用模糊补全
-      keybindings = false; # 启用 Ctrl+R / Ctrl+T 等快捷键
-    };
-
-  };
-  environment.shellAliases = {
+  # ===== shell 别名 =====
+  home.shellAliases = {
     ls = "eza";
     ll = "eza -l";
     la = "eza -la";
@@ -53,5 +9,43 @@
     nv = "nvim";
     vim = "nvim";
     vi = "nvim";
+  };
+
+  # ===== zsh =====
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [
+        "git"
+        "aliases"
+        "sudo"
+        "docker"
+        "docker-compose"
+      ];
+    };
+    initExtra = ''
+      eval "$(zoxide init zsh)"
+    '';
+  };
+
+  # ===== zoxide（HM 写法：cmd，不是 flags）=====
+  programs.zoxide = {
+    enable = true;
+    cmd = "cd";
+    enableZshIntegration = true;
+  };
+
+  # ===== starship =====
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # ===== fzf =====
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }
